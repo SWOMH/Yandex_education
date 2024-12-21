@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1C1C21;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: var(--header-height);
+    box-sizing: border-box;
+    z-index: 100;
+}
+
+.navigation {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.logo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.profile {
+    flex: 1;
+    display: flex;
+}

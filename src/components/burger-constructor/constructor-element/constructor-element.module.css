@@ -1,0 +1,19 @@
+.constructor {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;    
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.scrollable {
+    max-height: calc(100vh - 500px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
