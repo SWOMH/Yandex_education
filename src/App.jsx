@@ -1,12 +1,16 @@
-import { useState } from 'react'
 import './App.css'
-import Header from './components/header/header.jsx';
+import AppHeader from './components/header/header.jsx';
+import BurgerIngredients from './components/burger-ingredients/burger-ingredients.jsx';
+import BurgerConstructor from './components/burger-constructor/burger-constructor.jsx';
 
 function App() {
-
   return (
     <>
-      <Header />
+      <AppHeader />
+      <main className="container">
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </main>
     </>
   )
 }

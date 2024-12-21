@@ -7,13 +7,16 @@
     position: fixed;
     top: 0;
     left: 0;
+    height: var(--header-height);
     box-sizing: border-box;
+    z-index: 100;
 }
 
 .navigation {
     flex: 1;
     display: flex;
     align-items: center;
+    justify-content: end;
 }
 
 .logo {
@@ -25,5 +28,4 @@
 .profile {
     flex: 1;
     display: flex;
-    justify-content: flex-end;
 }

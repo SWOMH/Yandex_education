@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './header-button.module.css';
 
 function HeaderButton({ icon: Icon, text }) {
@@ -9,5 +10,10 @@ function HeaderButton({ icon: Icon, text }) {
         </button>
     );
 }
+
+HeaderButton.propTypes = {
+    icon: PropTypes.func.isRequired,
+    text: PropTypes.string.isRequired
+};
 
 export default HeaderButton;

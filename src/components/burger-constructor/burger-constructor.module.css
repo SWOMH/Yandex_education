@@ -1,0 +1,30 @@
+.section {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.constructor {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.total {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 16px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.price svg {
+    width: 33px;
+    height: 33px;
+}

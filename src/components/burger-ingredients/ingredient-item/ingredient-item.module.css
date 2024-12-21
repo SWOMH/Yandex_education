@@ -1,0 +1,9 @@
+.ingredients {
+    height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
