@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../../utils/type';
 import styles from './ingredient-item.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card'; 
 
@@ -55,15 +56,7 @@ function IngredientsItem({ ingredients }) {
 }
 
 IngredientsItem.propTypes = {
-    ingredients: PropTypes.arrayOf(
-        PropTypes.shape({
-            _id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            type: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
-            image: PropTypes.string.isRequired
-        })
-    ).isRequired
+    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired
 };
 
 export default IngredientsItem; 

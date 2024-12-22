@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../utils/type';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
 import SelectedIngredients from './constructor-element/constructor-element';
@@ -50,15 +51,7 @@ function BurgerConstructor({ ingredients }) {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(
-        PropTypes.shape({
-            _id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            type: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
-            image: PropTypes.string.isRequired
-        })
-    ).isRequired
+    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired
 };
 
 export default BurgerConstructor;
