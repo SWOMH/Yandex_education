@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../../utils/type';
 import styles from './ingredient-item.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card'; 
-import data from '../../../utils/data.js';
 
-function IngredientsItem() {
+function IngredientsItem({ ingredients }) {
 
-    const buns = data.filter(item => item.type === 'bun');
-    const sauces = data.filter(item => item.type === 'sauce');
-    const mains = data.filter(item => item.type === 'main');
+    const buns = ingredients.filter(item => item.type === 'bun');
+    const sauces = ingredients.filter(item => item.type === 'sauce');
+    const mains = ingredients.filter(item => item.type === 'main')
 
     return (
             <div className={`${styles.ingredients} custom-scroll mt-10`}>
@@ -53,5 +54,9 @@ function IngredientsItem() {
             </div>
     );
 }
+
+IngredientsItem.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired
+};
 
 export default IngredientsItem; 
