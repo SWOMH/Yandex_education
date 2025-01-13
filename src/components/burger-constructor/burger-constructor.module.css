@@ -28,3 +28,17 @@
     width: 33px;
     height: 33px;
 }
+
+.onHover {
+  background-color: var(--background-element);
+  border-radius: var(--common-border-radius);
+}
+
+.message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    padding: 20px;
+    text-align: center;
+}
