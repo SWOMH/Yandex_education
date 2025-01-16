@@ -11,17 +11,13 @@ const initialState = {
     counts: {}
 };
 
-const createUniqueId = () => {
-    return `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-};
-
 export const constructorReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_INGREDIENT: {
             const id = action.payload._id;
             return {
                 ...state,
-                ingredients: [...state.ingredients, { ...action.payload, uniqueId: createUniqueId() }],
+                ingredients: [...state.ingredients, action.payload],
                 counts: {
                     ...state.counts,
                     [id]: (state.counts[id] || 0) + 1

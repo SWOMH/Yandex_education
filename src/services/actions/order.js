@@ -1,4 +1,4 @@
-import { ORDER_ENDPOINT, checkResponse } from '../../utils/api-constants.js';
+import { ORDER_ENDPOINT, request } from '../../utils/api-constants';
 
 export const ORDER_REQUEST = 'ORDER_REQUEST';
 export const ORDER_SUCCESS = 'ORDER_SUCCESS';
@@ -8,14 +8,13 @@ export const orderBurger = (ingredients) => {
     return async (dispatch) => {
         dispatch({ type: ORDER_REQUEST });
         try {
-            const response = await fetch(ORDER_ENDPOINT, {
+            const data = await request(ORDER_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ ingredients }),
             });
-            const data = await checkResponse(response);
             if (data.success) {
                 dispatch({ type: ORDER_SUCCESS, order: data });
             } else {

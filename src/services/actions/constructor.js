@@ -3,10 +3,17 @@ export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const UPDATE_BUNS = 'UPDATE_BUNS';
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
 
+const createUniqueId = () => {
+    return `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+};
+
 export const addIngredient = (ingredient) => {
     return {
         type: ADD_INGREDIENT,
-        payload: ingredient
+        payload: {
+            ...ingredient,
+            uniqueId: createUniqueId()
+        }
     };
 };
 

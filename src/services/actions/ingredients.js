@@ -1,4 +1,4 @@
-import { INGREDIENTS_ENDPOINT, checkResponse } from '../../utils/api-constants';
+import { INGREDIENTS_ENDPOINT, request } from '../../utils/api-constants';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -10,8 +10,7 @@ export function getIngredients() {
             type: GET_INGREDIENTS_REQUEST
         });
         try {
-            const response = await fetch(INGREDIENTS_ENDPOINT);
-            const data = await checkResponse(response);
+            const data = await request(INGREDIENTS_ENDPOINT);
             if (data.success) {
                 dispatch({
                     type: GET_INGREDIENTS_SUCCESS,
