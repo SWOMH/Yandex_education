@@ -1,4 +1,4 @@
-import { ORDER_ENDPOINT, request } from '../../utils/api-constants';
+import { ORDER_ENDPOINT, fetchWithRefresh } from '../../utils/api-constants';
 
 export const ORDER_REQUEST = 'ORDER_REQUEST';
 export const ORDER_SUCCESS = 'ORDER_SUCCESS';
@@ -8,7 +8,7 @@ export const orderBurger = (ingredients) => {
     return async (dispatch) => {
         dispatch({ type: ORDER_REQUEST });
         try {
-            const data = await request(ORDER_ENDPOINT, {
+            const data = await fetchWithRefresh(ORDER_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
