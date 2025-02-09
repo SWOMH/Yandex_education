@@ -1,16 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../../utils/type';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-element.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteIngredient } from '../../../services/actions/constructor';
+import DraggableConstructorElement from './draggable-constructor-element';
 
-function SelectedIngredients({ ingredients }) {
-    const buns = ingredients.filter(item => item.type === 'bun');
-    const mains = ingredients.filter(item => item.type === 'main');
+
+function SelectedIngredients() {
+
+    const dispatch = useDispatch();
+    const { buns, ingredients } = useSelector(state => state.burgerConstructor);
+
+    const handleDeleteIngredient = (index, ingredientId) => {
+        dispatch(deleteIngredient(index, ingredientId));
+    };
 
     return (
         <div className={styles.constructor}>
-            {buns.length > 0 && (
+            {buns && buns.length > 0 ? 
                 <div className={`${styles.locked} ml-8`}>
                     <ConstructorElement
                         type="top"
@@ -19,25 +26,29 @@ function SelectedIngredients({ ingredients }) {
                         price={buns[0].price}
                         thumbnail={buns[0].image}
                     />
-                </div>
-            )}
+                </div> : <div className={`${styles.locked} ml-8`}>
+                    <ConstructorElement
+                        type="top"
+                        isLocked={false}
+                        text='Добавьте булочку'
+                        price='0'
+                        thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+                    />
+                    </div>
+            }
 
             <div className={`${styles.scrollable} custom-scroll`}>
-                {mains.map((item) => (
-                    <div key={item._id} className={styles.ingredient}>
-                        <div className={styles.dragIcon}>
-                            <DragIcon type="primary" />
-                        </div>
-                        <ConstructorElement
-                            text={item.name}
-                            price={item.price}
-                            thumbnail={item.image}
-                        />
-                    </div>
+                {ingredients.map((item, index) => (
+                    <DraggableConstructorElement
+                        key={item.uniqueId}
+                        item={item}
+                        index={index}
+                        handleClose={handleDeleteIngredient}
+                    />
                 ))}
             </div>
 
-            {buns.length > 0 && (
+            {buns && buns.length > 0 ?
                 <div className={`${styles.locked} ml-8`}>
                     <ConstructorElement
                         type="bottom"
@@ -46,14 +57,18 @@ function SelectedIngredients({ ingredients }) {
                         price={buns[0].price}
                         thumbnail={buns[0].image}
                     />
-                </div>
-            )}
+                </div> : <div className={`${styles.locked} ml-8`}>
+                    <ConstructorElement
+                        type="bottom"
+                        isLocked={false}
+                        text='Добавьте булочку'
+                        price='0'
+                        thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+                    />
+                    </div>
+            }
         </div>
     );
 }
-
-SelectedIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientPropType).isRequired
-};
 
 export default SelectedIngredients;

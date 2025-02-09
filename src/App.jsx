@@ -1,48 +1,39 @@
 import React from 'react';
-import './App.css'
 import AppHeader from './components/header/header.jsx';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from './components/burger-constructor/burger-constructor.jsx';
-import { INGREDIENTS_ENDPOINT, checkResponse } from './utils/api-constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from './services/actions/ingredients.js';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import styles from './App.module.css';
 
 function App() {
-  const [ingredients, setIngredients] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [hasError, setHasError] = React.useState(false);
+  
+  const { ingredients, ingredientsRequest, ingredientsFailed} = useSelector(store => store.ingredients);
 
+  const dispatch = useDispatch();
+  
   React.useEffect(() => {
-    setIsLoading(true);
-    fetch(INGREDIENTS_ENDPOINT)
-      .then(checkResponse)
-      .then(data => {
-        if (data.success) {
-          setIngredients(data.data);
-          setHasError(false);
-        }
-      })
-      .catch(err => {
-        console.error('Ошибка при получении ингредиентов:', err);
-        setHasError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+    dispatch(getIngredients())
+  }, [dispatch]);
 
-  if (isLoading) {
+  if (ingredientsRequest) {
     return <div>Загрузка...</div>;
   }
 
-  if (hasError) {
+  if (ingredientsFailed) {
     return <div>Произошла ошибка при получении данных</div>;
   }
 
   return (
     <>
       <AppHeader />
-      <main className="container">
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} />
+      <main className={styles.container}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
     </>
   )

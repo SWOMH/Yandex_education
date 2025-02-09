@@ -22,3 +22,7 @@
     text-align: center;
     min-height: 48px;
 }
+
+.dragging {
+    opacity: 0.5;
+}

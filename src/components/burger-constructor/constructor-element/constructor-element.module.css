@@ -17,3 +17,15 @@
     flex-direction: column;
     gap: 16px;
 }
+
+.dragging {
+    opacity: 0.3;
+}
+
+.dragIcon {
+    cursor: grab;
+}
+
+.dragIcon:active {
+    cursor: grabbing;
+}

@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './order-details.module.css';
 import doneIcon from '../../../images/done.svg';
+import PropTypes from 'prop-types';
 
-function OrderDetails() {
+function OrderDetails({ order }) {
     return (
         <div className={styles.container}>
             <div className={`${styles.orderNumber} text text_type_digits-large mt-15 mb-8`}>
-                034536
+                {order.order.number}
             </div>
             <p className={`${styles.identifier} text text_type_main-default mb-15`}>
                 идентификатор заказа
@@ -23,5 +24,13 @@ function OrderDetails() {
         </div>
     );
 }
+
+OrderDetails.propTypes = {
+    order: PropTypes.shape({
+        order: PropTypes.shape({
+            number: PropTypes.number.isRequired
+        }).isRequired
+    }).isRequired
+};
 
 export default OrderDetails;
