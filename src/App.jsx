@@ -13,19 +13,27 @@ import { checkUserAuth } from './services/actions/user.js';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styles from './App.module.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { OnlyAuth, OnlyUnAuth } from './components/protected-route.jsx';
+import IngredientPage from './components/modal/ingredient-page/ingredient-page';
+import Modal from './components/modal/details-modal';
+import IngredientDetails from './components/burger-ingredients/ingredient-details/ingredient-details';
 
 function App() {
-  
-  const { ingredients, ingredientsRequest, ingredientsFailed} = useSelector(store => store.ingredients);
-
+  const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.ingredients);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
   const dispatch = useDispatch();
-  
+
   React.useEffect(() => {
     dispatch(checkUserAuth());
     dispatch(getIngredients());
   }, [dispatch]);
+
+  const handleModalClose = () => {
+    navigate(-1);
+  };
 
   if (ingredientsRequest) {
     return <div>Загрузка...</div>;
@@ -36,9 +44,9 @@ function App() {
   }
 
   return (
-    <Router>
+    <>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path="/" element={
           <main className={styles.container}>
             <DndProvider backend={HTML5Backend}>
@@ -47,15 +55,29 @@ function App() {
             </DndProvider>
           </main>
         } />
+        <Route path="/ingredients/:id" element={<IngredientPage />} />
         <Route path="/login" element={<OnlyUnAuth element={<Login/>} />}/>
-        {/* <Route path="/login" element={<Login/>}/> */}
         <Route path="/register" element={<OnlyUnAuth element={<Register />} />}/>
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<OnlyUnAuth element={<ForgotPassword />}/>} />
+        <Route path="/reset-password" element={<OnlyUnAuth element={<ResetPassword />}/>} />
         <Route path="/profile" element={<OnlyAuth element={<Profile/>}/>}/>
+        <Route path="/profile/orders" element={<OnlyAuth element={<Profile/>}/>}/>
       </Routes>
-    </Router>
-  )
+
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:id"
+            element={
+              <Modal onClose={handleModalClose}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
+    </>
+  );
 }
 
 export default App

@@ -3,8 +3,11 @@ import styles from './ingredient-item.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card'; 
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function IngredientsItem({ setActiveTab }) {
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const { ingredients } = useSelector(state => state.ingredients)
 
@@ -26,6 +29,12 @@ function IngredientsItem({ setActiveTab }) {
         });
     };
 
+    const handleClick = (ingredient) => {
+        navigate(`/ingredients/${ingredient._id}`, {
+            state: { background: location }
+        });
+    };
+
     return (
             <div className={`${styles.ingredients} custom-scroll mt-10`} onScroll={handleScroll}>
                 <h2 id="buns" className="text text_type_main-medium">Булки</h2>
@@ -37,6 +46,7 @@ function IngredientsItem({ setActiveTab }) {
                             price={item.price}
                             name={item.name}
                             ingredient={item}
+                            onClick={() => handleClick(item)}
                         />
                     ))}
                 </div>
@@ -50,6 +60,7 @@ function IngredientsItem({ setActiveTab }) {
                             price={item.price}
                             name={item.name}
                             ingredient={item}
+                            onClick={() => handleClick(item)}
                         />
                     ))}
                 </div>
@@ -63,6 +74,7 @@ function IngredientsItem({ setActiveTab }) {
                             price={item.price}
                             name={item.name}
                             ingredient={item}
+                            onClick={() => handleClick(item)}
                         />
                     ))}
                 </div>

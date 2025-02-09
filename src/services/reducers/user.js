@@ -6,7 +6,10 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILED,
-    SET_IS_AUTH_CHECKED
+    SET_IS_AUTH_CHECKED,
+    EDIT_PROFILE_REQUEST,
+    EDIT_PROFILE_SUCCESS,
+    EDIT_PROFILE_FAILED
 } from '../actions/user';
 
 const initialState = {
@@ -16,7 +19,9 @@ const initialState = {
     registerFailed: false,
     error: null,
     loginRequest: false,
-    loginFailed: false
+    loginFailed: false,
+    editProfileRequest: false,
+    editProfileFailed: false
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -82,6 +87,31 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuthChecked: action.isAuthChecked
+            };
+        }
+        case EDIT_PROFILE_REQUEST: {
+            return {
+                ...state,
+                editProfileRequest: true,                
+                editProfileFailed: false,
+                error: null
+            };
+        }
+        case EDIT_PROFILE_SUCCESS: {
+            return {
+                ...state,
+                user: action.user,
+                editProfileRequest: false,
+                isAuthChecked: true
+            };
+        }
+        case EDIT_PROFILE_FAILED: {
+            return {
+                ...state,
+                editProfileFailed: true,
+                isAuthChecked: false,
+                editProfileRequest: false,
+                error: action.error
             };
         }
         default: {

@@ -1,10 +1,19 @@
 import React from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './reset-password.module.css';
 import { resetPassword } from '../../../utils/api-constants'
 
 function ResetPassword() {
+    const navigate = useNavigate()
+    const route_nomber = localStorage.getItem('route_reset')
+
+    React.useEffect(() => {
+        if (route_nomber !== '1') {
+            navigate('/forgot-password')
+        }
+    }, [])
+
     const [form, setForm] = React.useState({
         password: '',
         token: ''
@@ -16,11 +25,11 @@ function ResetPassword() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        resetPassword(form.email, form.token)
+        resetPassword(form.password, form.token)
             .then((success) => {
                 localStorage.removeItem('route_reset');
                 if (success) {
-                    navigate({ pathname: '/login' });
+                    navigate({ pathname: '/' });
                 }
             });
     };

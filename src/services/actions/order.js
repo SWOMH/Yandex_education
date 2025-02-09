@@ -8,10 +8,12 @@ export const orderBurger = (ingredients) => {
     return async (dispatch) => {
         dispatch({ type: ORDER_REQUEST });
         try {
+            const accessToken = localStorage.getItem('accessToken');
             const data = await fetchWithRefresh(ORDER_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': accessToken
                 },
                 body: JSON.stringify({ ingredients }),
             });

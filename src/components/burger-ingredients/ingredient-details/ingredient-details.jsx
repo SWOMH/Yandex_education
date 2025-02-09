@@ -2,12 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../../utils/type';
 import styles from './ingredient-details.module.css';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-function IngredientDetails({ ingredient }) {
+function IngredientDetails({ titleClassName }) {
+    const { id } = useParams();
+    const ingredients = useSelector(state => state.ingredients.ingredients);
+    const ingredient = ingredients.find(item => item._id === id);
+
+    if (!ingredient) {
+        return <div>Ингредиент не найден</div>;
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h2 className={`${styles.title} text text_type_main-large pl-10 pr-10 pt-10`}>
+                <h2 className={titleClassName || `${styles.title} text text_type_main-large pl-10 pr-10 pt-10`}>
                     Детали ингредиента
                 </h2>
             </div>
@@ -16,41 +26,23 @@ function IngredientDetails({ ingredient }) {
                 alt={ingredient.name} 
                 className={styles.image}
             />
-            <p className={`${styles.name} text text_type_main-medium mt-4`}>
-                {ingredient.name}
-            </p>
+            <h2 className="text text_type_main-medium mt-4 mb-8">{ingredient.name}</h2>
             <div className={`${styles.nutrients} mt-8 pb-15`}>
                 <div className={styles.nutrient}>
-                    <p className="text text_type_main-default text_color_inactive">
-                        Калории,ккал
-                    </p>
-                    <p className="text text_type_digits-default text_color_inactive">
-                        {ingredient.calories}
-                    </p>
+                    <span className="text text_type_main-default text_color_inactive">Калории,ккал</span>
+                    <span className="text text_type_digits-default text_color_inactive">{ingredient.calories}</span>
                 </div>
                 <div className={styles.nutrient}>
-                    <p className="text text_type_main-default text_color_inactive">
-                        Белки, г
-                    </p>
-                    <p className="text text_type_digits-default text_color_inactive">
-                        {ingredient.proteins}
-                    </p>
+                    <span className="text text_type_main-default text_color_inactive">Белки, г</span>
+                    <span className="text text_type_digits-default text_color_inactive">{ingredient.proteins}</span>
                 </div>
                 <div className={styles.nutrient}>
-                    <p className="text text_type_main-default text_color_inactive">
-                        Жиры, г
-                    </p>
-                    <p className="text text_type_digits-default text_color_inactive">
-                        {ingredient.fat}
-                    </p>
+                    <span className="text text_type_main-default text_color_inactive">Жиры, г</span>
+                    <span className="text text_type_digits-default text_color_inactive">{ingredient.fat}</span>
                 </div>
                 <div className={styles.nutrient}>
-                    <p className="text text_type_main-default text_color_inactive">
-                        Углеводы, г
-                    </p>
-                    <p className="text text_type_digits-default text_color_inactive">
-                        {ingredient.carbohydrates}
-                    </p>
+                    <span className="text text_type_main-default text_color_inactive">Углеводы, г</span>
+                    <span className="text text_type_digits-default text_color_inactive">{ingredient.carbohydrates}</span>
                 </div>
             </div>
         </div>
@@ -58,7 +50,7 @@ function IngredientDetails({ ingredient }) {
 }
 
 IngredientDetails.propTypes = {
-    ingredient: ingredientPropType.isRequired
+    titleClassName: PropTypes.string
 };
 
 export default IngredientDetails; 

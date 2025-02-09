@@ -1,32 +1,52 @@
 import React from 'react';
-import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+import ProfileNav from './profile-nav/profile-nav';
+import { editUserInfo } from '../../../services/actions/user'
 
 function Profile() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
-    
     const [form, setForm] = React.useState({
         name: user?.name || '',
         email: user?.email || '',
         password: ''
     });
+    const [isEditing, setIsEditing] = React.useState(false);
 
     const onChange = e => {
         setForm({ ...form, [e.target.name]: e.target.value });
+        setIsEditing(true);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // пока ничего, потом логику реализую
+    const handleCancel = () => {
+        setForm({
+            name: user?.name || '',
+            email: user?.email || '',
+            password: ''
+        });
+        setIsEditing(false);
     };
+
+    const handleSave = () => {
+        const updatedFields = {};
+
+        if (form.name !== user?.name) updatedFields.name = form.name;
+        if (form.email !== user?.email) updatedFields.email = form.email;
+        if (form.password) updatedFields.password = form.password;
+
+        if (Object.keys(updatedFields).length > 0) {
+            dispatch(editUserInfo(updatedFields));
+        }
+
+        setIsEditing(false);
+    }
 
     return (
         <div className={styles.container}>
-            <h2 className={`${styles.title} text text_type_main-medium mb-6`}>Профиль</h2>
-            <form onSubmit={handleSubmit} className={styles.form}>
+            <ProfileNav />
+            <form className={styles.form}>
                 <Input
                     type="text"
                     placeholder="Имя"
@@ -48,18 +68,25 @@ function Profile() {
                     name="password"
                     icon="EditIcon"
                 />
-                <Button htmlType="submit" type="primary" size="medium">
-                    Сохранить
-                </Button>
+                {isEditing && (
+                    <div className={styles.buttons}>
+                        <Button 
+                            type="secondary" 
+                            size="medium" 
+                            onClick={handleCancel}
+                        >
+                            Отмена
+                        </Button>
+                        <Button 
+                            type="primary" 
+                            size="medium"
+                            onClick={handleSave}
+                        >
+                            Сохранить
+                        </Button>
+                    </div>
+                )}
             </form>
-            <div className={styles.links}>
-                <p className="text text_type_main-default text_color_inactive">
-                    Вы — новый пользователь? <Link to="/register" className={styles.link}>Зарегистрироваться</Link>
-                </p>
-                <p className="text text_type_main-default text_color_inactive">
-                    Забыли пароль? <Link to="/forgot-password" className={styles.link}>Восстановить пароль</Link>
-                </p>
-            </div>
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useNavigate } from 'react-router-dom';
 import styles from './burger-constructor.module.css';
 import SelectedIngredients from './constructor-element/constructor-element';
 import OrderDetails from './order-details/order-details';
@@ -11,9 +12,11 @@ import { orderBurger } from '../../services/actions/order';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const { ingredients, buns } = useSelector(state => state.burgerConstructor);
     const { order, orderRequest, orderFailed } = useSelector(state => state.order);
+    const user = useSelector(state => state.user.user);
 
     const totalPrice = useMemo(() => {
         const bunPrice = buns.length > 0 ? buns[0].price * 2 : 0;
@@ -36,6 +39,11 @@ function BurgerConstructor() {
     });
 
     const handleOrderClick = () => {
+        if (!user) {
+            navigate('/login', { state: { from: '/' } });
+            return;
+        }
+
         const ingredientIds = [
             ...buns.map(bun => bun._id),
             ...ingredients.map(ingredient => ingredient._id),
@@ -68,7 +76,7 @@ function BurgerConstructor() {
                         onClick={handleOrderClick}
                         disabled={!buns.length || !ingredients.length}
                     >
-                        Оформить заказ
+                        {user ? 'Оформить заказ' : 'Войти для заказа'}
                     </Button>
                 </div>
             </section>
