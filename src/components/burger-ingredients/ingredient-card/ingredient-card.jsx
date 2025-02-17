@@ -6,8 +6,11 @@ import styles from './ingredient-card.module.css';
 import { useDrag } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 import { openIngredientDetails } from '../../../services/actions/ingredient-details';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function IngredientCard({ image, price, name, ingredient }) {
+    const location = useLocation();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const count = useSelector(state => state.burgerConstructor.counts[ingredient._id] || 0);
 
@@ -20,7 +23,9 @@ function IngredientCard({ image, price, name, ingredient }) {
     });
 
     const handleClick = () => {
-        dispatch(openIngredientDetails(ingredient));
+        navigate(`/ingredients/${ingredient._id}`, {
+            state: { background: location }
+        });
     };
 
     return (
