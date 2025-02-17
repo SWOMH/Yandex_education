@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import IngredientDetails  from '../../burger-ingredients/ingredient-details/ingredient-details';
 import styles from './ingredient-page.module.css';
 
 function IngredientPage() {
-    const { id } = useParams();
-    const ingredients = useSelector(state => state.ingredients.ingredients);
+    const { id } = useParams<{ id: string }>();
+    //@ts-ignore
+    const ingredients = useSelector(state => state.ingredients.ingredients);// @ts-ignore
     const ingredient = ingredients.find(item => item._id === id);
 
     if (!ingredient) {

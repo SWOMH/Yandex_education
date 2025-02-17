@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import styles from './header-button.module.css';
+import { IHeaderButtonProps } from '../../../utils/types';
 
-function HeaderButton({ icon: Icon, text, to = '/' }) {
+
+
+const HeaderButton: FC<IHeaderButtonProps> = ({ icon: Icon, text, to = '/' }) => {
     return (
         <Link to={to} className={`${styles.HeaderButton} pt-4 pb-4 pl-5 pr-5 ml-2`}>
             <Icon type="primary" />
@@ -13,11 +15,5 @@ function HeaderButton({ icon: Icon, text, to = '/' }) {
         </Link>
     );
 }
-
-HeaderButton.propTypes = {
-    icon: PropTypes.func.isRequired,
-    text: PropTypes.string.isRequired,
-    to: PropTypes.string
-};
 
 export default HeaderButton;

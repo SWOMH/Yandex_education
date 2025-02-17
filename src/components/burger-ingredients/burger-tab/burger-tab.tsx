@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-tab.module.css';
-import PropTypes from 'prop-types';
+import { IActiveTab } from '../../../utils/types';
 
-function BurgerTab({ activeTab }) {
+const BurgerTab: FC<IActiveTab> = ({ activeTab, onTabClick }) => {
+    const handleClick = (value: string): void => {
+        if (onTabClick) {
+            onTabClick(value);
+        }
+    };
 
     return (
         <div className={styles.tabs}>
@@ -18,10 +23,6 @@ function BurgerTab({ activeTab }) {
             </Tab>
         </div>
     );
-}
-
-BurgerTab.propTypes = {
-    activeTab: PropTypes.string.isRequired
 };
 
 export default BurgerTab; 

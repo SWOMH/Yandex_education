@@ -1,15 +1,15 @@
-import React, { useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { moveIngredient } from '../../../services/actions/constructor';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-element.module.css';
-import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../../utils/type';
+import { IDraggableConstructorElementProps } from '../../../utils/types';
 
-function DraggableConstructorElement({ item, index, handleClose }) {
+
+const DraggableConstructorElement: FC<IDraggableConstructorElementProps> = ({ item, index, handleClose }) => {
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement | null>(null);
 
     const [{ isDragging }, drag] = useDrag({
         type: 'constructorElement',
@@ -19,19 +19,22 @@ function DraggableConstructorElement({ item, index, handleClose }) {
         })
     });
 
-    const [, drop] = useDrop({
+    interface DragObject {
+        index: number;
+    }
+
+    const [, drop] = useDrop<DragObject>({
         accept: 'constructorElement',
         hover(draggedItem, monitor) {
             if (!ref.current) return;
-            
             const dragIndex = draggedItem.index;
             const hoverIndex = index;
             
             if (dragIndex === hoverIndex) return;
-
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
+            if (!clientOffset) return;
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
@@ -63,10 +66,5 @@ function DraggableConstructorElement({ item, index, handleClose }) {
     );
 }
 
-DraggableConstructorElement.propTypes = {
-    item: ingredientPropType.isRequired,
-    index: PropTypes.number.isRequired,
-    handleClose: PropTypes.func.isRequired
-};
 
 export default DraggableConstructorElement; 

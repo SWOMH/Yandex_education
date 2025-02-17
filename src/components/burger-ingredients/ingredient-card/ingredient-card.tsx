@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { ingredientPropType } from '../../../utils/type';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
@@ -7,11 +6,20 @@ import { useDrag } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux';
 import { openIngredientDetails } from '../../../services/actions/ingredient-details';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { IIngredient } from '../../../utils/types';
 
-function IngredientCard({ image, price, name, ingredient }) {
+interface IIngredientCardProps {
+    image: string;
+    price: number;
+    name: string;
+    count?: number;
+    ingredient: IIngredient;
+}
+
+const IngredientCard: FC<IIngredientCardProps> = ({ image, price, name, ingredient }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    // @ts-ignore
     const count = useSelector(state => state.burgerConstructor.counts[ingredient._id] || 0);
 
     const [{ isDragging }, dragRef] = useDrag({
@@ -47,13 +55,6 @@ function IngredientCard({ image, price, name, ingredient }) {
             <p className={`${styles.name} text text_type_main-default`}>{name}</p>
         </div>
     );
-}
-
-IngredientCard.propTypes = {
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    ingredient: ingredientPropType.isRequired
 };
 
 export default IngredientCard; 

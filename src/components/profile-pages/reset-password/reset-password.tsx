@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { FC, FormEvent } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './reset-password.module.css';
 import { resetPassword } from '../../../utils/api-constants'
+import { IFormEvent, IResetPasswordForm } from '../../../utils/types'
 
-function ResetPassword() {
+const ResetPassword: FC = () => {
     const navigate = useNavigate()
     const route_nomber = localStorage.getItem('route_reset')
 
@@ -14,16 +15,16 @@ function ResetPassword() {
         }
     }, [])
 
-    const [form, setForm] = React.useState({
+    const [form, setForm] = React.useState<IResetPasswordForm>({
         password: '',
         token: ''
     });
 
-    const onChange = e => {
+    const onChange = (e: IFormEvent) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         resetPassword(form.password, form.token)
             .then((success) => {
@@ -51,7 +52,8 @@ function ResetPassword() {
                     name={'token'}
                     placeholder="Введите код из письма"
                     extraClass="mb-6"
-                />                
+                    onPointerEnterCapture={() => {}} 
+                    onPointerLeaveCapture={() => {}}/>                
                 <Button htmlType="submit" type="primary" size="medium">
                     Войти
                 </Button>

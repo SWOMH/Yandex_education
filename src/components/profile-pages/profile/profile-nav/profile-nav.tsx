@@ -1,8 +1,9 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './profile-nav.module.css';
 import { logout } from '../../../../utils/api-constants'
+import { FC } from 'react';
 
-function ProfileNav() {
+const ProfileNav: FC = () => {
 
     const navigate = useNavigate()
 
