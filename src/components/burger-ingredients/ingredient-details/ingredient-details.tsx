@@ -1,13 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import { ingredientPropType } from '../../../utils/type';
 import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { IIngredientDetails } from '../../../utils/types';
 
-function IngredientDetails({ titleClassName }) {
+const IngredientDetails: FC<IIngredientDetails> = ({ titleClassName  }) => {
     const { id } = useParams();
+    // @ts-ignore
     const ingredients = useSelector(state => state.ingredients.ingredients);
+    // @ts-ignore
     const ingredient = ingredients.find(item => item._id === id);
 
     if (!ingredient) {
@@ -47,10 +49,7 @@ function IngredientDetails({ titleClassName }) {
             </div>
         </div>
     );
-}
-
-IngredientDetails.propTypes = {
-    titleClassName: PropTypes.string
 };
+
 
 export default IngredientDetails; 

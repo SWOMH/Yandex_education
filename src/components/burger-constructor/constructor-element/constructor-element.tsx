@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-element.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteIngredient } from '../../../services/actions/constructor';
 import DraggableConstructorElement from './draggable-constructor-element';
+import { IhandleDelete, IIngredient, IConstructorState } from '../../../utils/types';
 
-
-function SelectedIngredients() {
-
+const SelectedIngredients: FC = () => {
     const dispatch = useDispatch();
-    const { buns, ingredients } = useSelector(state => state.burgerConstructor);
+    const { buns, ingredients } = useSelector((state: { burgerConstructor: IConstructorState }) => state.burgerConstructor);
 
-    const handleDeleteIngredient = (index, ingredientId) => {
+    const handleDeleteIngredient = ({ index, ingredientId }: IhandleDelete): void => {
         dispatch(deleteIngredient(index, ingredientId));
     };
 
     return (
+        //@ts-ignore
         <div className={styles.constructor}>
             {buns && buns.length > 0 ? 
                 <div className={`${styles.locked} ml-8`}>
@@ -31,19 +31,20 @@ function SelectedIngredients() {
                         type="top"
                         isLocked={false}
                         text='Добавьте булочку'
-                        price='0'
+                        price={0}
                         thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
                     />
                     </div>
             }
 
             <div className={`${styles.scrollable} custom-scroll`}>
-                {ingredients.map((item, index) => (
+                {ingredients.map((item: IIngredient, index: number) => (
                     <DraggableConstructorElement
                         key={item.uniqueId}
                         item={item}
                         index={index}
-                        handleClose={handleDeleteIngredient}
+                        // @ts-ignore {() => handleClose(index, item._id)}
+                        handleClose={() => handleDeleteIngredient({ index, ingredientId: item._id })}
                     />
                 ))}
             </div>
@@ -61,8 +62,8 @@ function SelectedIngredients() {
                     <ConstructorElement
                         type="bottom"
                         isLocked={false}
-                        text='Добавьте булочку'
-                        price='0'
+                        text='Добавьте булочку'                        
+                        price={0}
                         thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
                     />
                     </div>

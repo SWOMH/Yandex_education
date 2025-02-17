@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { ReactNode, FC } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import styles from './details-modal.module.css';
-import ModalOverlay from './modal-overlay/modal-overlay.jsx';
+import ModalOverlay from './modal-overlay/modal-overlay.js';
+import { IModalProps } from '../../utils/types'
 
-const modalRoot = document.getElementById('modal-root');
+const modalRoot = document.getElementById('modal-root') as HTMLElement | null;
 
-function Modal({ children, onClose }) {
+if (!modalRoot) {
+    throw new Error("Modal root не найден");
+}
+
+
+
+const Modal: FC<IModalProps> = ({ children, onClose }) => {
     React.useEffect(() => {
-        const handleEsc = (e) => {
+        const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 onClose();
             }
@@ -33,9 +39,5 @@ function Modal({ children, onClose }) {
     );
 }
 
-Modal.propTypes = {
-    children: PropTypes.node.isRequired,
-    onClose: PropTypes.func.isRequired
-};
 
 export default Modal;
