@@ -8,11 +8,33 @@ export const API_USER_PROFILE = '/auth/user' // эндпоинт получен�
 const API_RESET_PASSWORD = '/password-reset'; // эндпоинт запроса на сброс пароля
 const API_RESET_PASSWORD_RESET = '/password-reset/reset' // эндпоинт самого сброса пароля
 
-const checkReponse = (res) => {
+
+interface IApiResponse<T> {
+    success: boolean;
+    message?: string;
+    [key: string]: any;
+    data?: T;
+}
+
+interface IRefreshTokenResponse {
+    success: boolean;
+    refreshToken: string;
+    accessToken: string;
+}
+
+interface IRequestOptions extends RequestInit {
+    headers: {
+        "Content-Type": string;
+        authorization?: string;
+    };
+}
+
+
+const checkReponse = async <T>(res: Response): Promise<IApiResponse<T>> => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
   };
   
-export const refreshToken = async () => {
+export const refreshToken = async (): Promise<IRefreshTokenResponse> => {
     const res = await fetch(`${NORMA_API}/auth/token`, {
         method: "POST",
         headers: {
@@ -22,21 +44,26 @@ export const refreshToken = async () => {
             token: localStorage.getItem("refreshToken"),
         }),
     });
-    const refreshData = await checkReponse(res);
-    if (!refreshData.success) {
+
+    const refreshData = await checkReponse<IRefreshTokenResponse>(res);
+
+    if (!refreshData.success || !refreshData.data) {
         return Promise.reject(refreshData);
     }
-    localStorage.setItem("refreshToken", refreshData.refreshToken);
-    localStorage.setItem("accessToken", refreshData.accessToken);
-    return refreshData;
+
+    localStorage.setItem("refreshToken", refreshData.data.refreshToken);
+    localStorage.setItem("accessToken", refreshData.data.accessToken);
+
+    return refreshData.data;
 };
 
-export const fetchWithRefresh = async (endpoint, options) => {
+
+export const fetchWithRefresh = async <T>(endpoint: string, options: IRequestOptions): Promise<IApiResponse<T>> => {
     const url = NORMA_API + endpoint;
     try {    
         const res = await fetch(url, options);
-        return await checkReponse(res);
-    } catch (err) {
+        return await checkReponse<T>(res);
+    } catch (err: any) {
         if (err.message === "jwt expired") {
             const refreshData = await refreshToken();
             options.headers.authorization = refreshData.accessToken;
@@ -48,7 +75,7 @@ export const fetchWithRefresh = async (endpoint, options) => {
 }
 };
 
-export const forgotPassword = async (email) => {
+export const forgotPassword = async (email: string): Promise<boolean> => {
     try {
         const response = await fetch(`${NORMA_API}${API_RESET_PASSWORD}`, {
             method: 'POST',
@@ -58,13 +85,14 @@ export const forgotPassword = async (email) => {
             body: JSON.stringify({ email })
         });
         const data = await response.json();
-        if (data.success) {
-            return data
-        }
+        return data.success;
         
     } catch (error) {
+        // @ts-ignore
         dispatch({ 
+            // @ts-ignore
             type: LOGIN_FAILED,
+            // @ts-ignore
             error: error.message 
         });
         return false;
@@ -72,7 +100,7 @@ export const forgotPassword = async (email) => {
 };
 
 
-export const resetPassword = async (password, token) => {
+export const resetPassword = async (password: string, token: string): Promise<boolean> => {
     try {
         const response = await fetch(`${NORMA_API}${API_RESET_PASSWORD_RESET}`, {
             method: 'POST',
@@ -82,13 +110,14 @@ export const resetPassword = async (password, token) => {
             body: JSON.stringify({ password, token })
         });
         const data = await response.json();
-        if (data.success) {
-            return data
-        }
+        return data.success          
         
     } catch (error) {
+        // @ts-ignore
         dispatch({ 
+            // @ts-ignore
             type: LOGIN_FAILED,
+            // @ts-ignore
             error: error.message 
         });
         return false;

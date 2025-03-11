@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './register.module.css';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../../services/actions/user';
+import { IRegisterForm, IFormEvent } from '../../../utils/types';
 
-function Register() {
-    const [form, setForm] = React.useState({
+const Register: FC = () => {
+    const [form, setForm] = useState<IRegisterForm>({
         name: '',
         email: '',
         password: ''
@@ -16,13 +17,15 @@ function Register() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const onChange = e => {
+    const onChange = (e: IFormEvent): void => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(registerUser(form.email, form.password, form.name))
+        // @ts-ignore
             .then((success) => {
                 if (success) {
                     navigate('/');
@@ -39,9 +42,9 @@ function Register() {
                     value={form.name}
                     name={'name'}
                     placeholder="Имя"
-                    isIcon={false}
                     extraClass="mb-6"
-                />
+                    onPointerEnterCapture={() => {}} 
+                    onPointerLeaveCapture={() => {}}/>
                 <EmailInput
                     onChange={onChange}
                     value={form.email}
@@ -67,6 +70,6 @@ function Register() {
             </div>
         </div>
     );
-}
+};
 
 export default Register;

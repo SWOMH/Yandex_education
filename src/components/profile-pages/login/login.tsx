@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../services/actions/user';
 import styles from './login.module.css';
+import { ILoginForm, IFormEvent } from '../../../utils/types';
 
-function Login() {
+const Login: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [form, setForm] = React.useState({
+    const [form, setForm] = useState<ILoginForm>({
         email: '',
         password: ''
     });
 
-    const onChange = e => {
+    const onChange = (e: IFormEvent): void => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent): void => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(loginUser(form.email, form.password))
+        // @ts-ignore
             .then((success) => {
                 if (success) {
                     const { from } = location.state || { from: { pathname: '/' } };
@@ -62,6 +65,6 @@ function Login() {
             </div>
         </div>
     );
-}
+};
 
 export default Login;

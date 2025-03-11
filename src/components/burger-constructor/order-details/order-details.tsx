@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './order-details.module.css';
 import doneIcon from '../../../images/done.svg';
-import PropTypes from 'prop-types';
+import { IOrderDetails } from '../../../utils/types';
 
-function OrderDetails({ order }) {
+const OrderDetails: FC<IOrderDetails> = ({ order }) => {
     return (
         <div className={styles.container}>
             <div className={`${styles.orderNumber} text text_type_digits-large mt-15 mb-8`}>
@@ -24,13 +24,5 @@ function OrderDetails({ order }) {
         </div>
     );
 }
-
-OrderDetails.propTypes = {
-    order: PropTypes.shape({
-        order: PropTypes.shape({
-            number: PropTypes.number.isRequired
-        }).isRequired
-    }).isRequired
-};
 
 export default OrderDetails;

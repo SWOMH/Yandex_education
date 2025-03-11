@@ -9,22 +9,24 @@ import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { addIngredient, updateBuns } from '../../services/actions/constructor';
 import { orderBurger } from '../../services/actions/order';
+import { IDroppedIngredient } from '../../utils/types';
+import { IIngredient } from '../../utils/types';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
-    const { ingredients, buns } = useSelector(state => state.burgerConstructor);
-    const { order, orderRequest, orderFailed } = useSelector(state => state.order);
+    const [isModalOpen, setIsModalOpen] = React.useState<Boolean>(false);//@ts-ignore
+    const { ingredients, buns } = useSelector(state => state.burgerConstructor);//@ts-ignore
+    const { order, orderRequest, orderFailed } = useSelector(state => state.order); //@ts-ignore
     const user = useSelector(state => state.user.user);
 
     const totalPrice = useMemo(() => {
-        const bunPrice = buns.length > 0 ? buns[0].price * 2 : 0;
+        const bunPrice = buns.length > 0 ? buns[0].price * 2 : 0; //@ts-ignore
         const ingredientsPrice = ingredients.reduce((total, ingredient) => total + ingredient.price, 0);
         return bunPrice + ingredientsPrice;
     }, [ingredients, buns]);
 
-    const [{ isHover }, dropTarget] = useDrop({
+    const [{ isHover }, dropTarget] = useDrop<IDroppedIngredient, unknown, { isHover: boolean }>({
         accept: 'ingredient',
         drop(item) {
             if (item.type === 'bun') {
@@ -45,10 +47,10 @@ function BurgerConstructor() {
         }
 
         const ingredientIds = [
-            ...buns.map(bun => bun._id),
-            ...ingredients.map(ingredient => ingredient._id),
-            ...buns.map(bun => bun._id)
-        ];
+            ...buns.map((bun: IIngredient) => bun._id),
+            ...ingredients.map((ingredient: IIngredient) => ingredient._id),
+            ...buns.map((bun: IIngredient) => bun._id)
+        ];//@ts-ignore
         dispatch(orderBurger(ingredientIds));
         setIsModalOpen(true);
     };
