@@ -1,13 +1,10 @@
 import React, { FC } from 'react';
-import { ingredientPropType } from '../../../utils/type';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-card.module.css';
 import { useDrag } from 'react-dnd';
-import { useSelector, useDispatch } from 'react-redux';
-import { openIngredientDetails } from '../../../services/actions/ingredient-details';
+import { useSelector } from '../../../services/types/data';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IIngredient } from '../../../utils/types';
-
 interface IIngredientCardProps {
     image: string;
     price: number;
@@ -19,7 +16,6 @@ interface IIngredientCardProps {
 const IngredientCard: FC<IIngredientCardProps> = ({ image, price, name, ingredient }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    // @ts-ignore
     const count = useSelector(state => state.burgerConstructor.counts[ingredient._id] || 0);
 
     const [{ isDragging }, dragRef] = useDrag({

@@ -1,17 +1,26 @@
+import { IIngredient } from '../../utils/types';
 import {
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
     UPDATE_BUNS,
-    MOVE_INGREDIENT
+    MOVE_INGREDIENT,
+    IAddIngredientPayload,
+    TConstructorActions
 } from '../actions/constructor';
 
-const initialState = {
+interface IConstructorState {
+    buns: IIngredient[];
+    ingredients: IAddIngredientPayload[];
+    counts: { [key: string]: number };
+}
+
+const initialState: IConstructorState = {
     buns: [],
     ingredients: [],
     counts: {}
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action: TConstructorActions) => {
     switch (action.type) {
         case ADD_INGREDIENT: {
             const id = action.payload._id;

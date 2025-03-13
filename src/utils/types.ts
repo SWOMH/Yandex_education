@@ -37,6 +37,10 @@ export interface IIngredientDetails {
     titleClassName?: string;
 }
 
+export interface IOrderDetailsProps {
+    titleClassName?: string;
+}
+
 export interface IIngredientsItem {
     setActiveTab: (tab: string) => void;
 }
@@ -109,7 +113,7 @@ export interface IOrderDetails {
         order: {    
             number: number;
         }
-    };
+    } | number;
 }
 
 export interface IDroppedIngredient {
@@ -125,3 +129,13 @@ export interface IConstructorState {
     ingredients: IIngredient[];
     counts: { [key: string]: number };
 }
+
+export type TOrder = {
+    _id: string;
+    number: number;
+    name: string;
+    status: 'done' | 'pending' | 'created';
+    ingredients: Array<string>;
+    createdAt: string;
+    updatedAt: string;
+};  

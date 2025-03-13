@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/data';
 import BurgerTab from './burger-tab/burger-tab';
 import styles from './burger-ingredients.module.css';
 import IngredientsItem from './ingredient-item/ingredient-item';
@@ -10,7 +10,7 @@ import { closeIngredientDetails } from '../../services/actions/ingredient-detail
 const BurgerIngredients: FC = () => {
     const [activeTab, setActiveTab] = useState<string>('buns');
     const dispatch = useDispatch();
-    // @ts-ignore
+
     const { currentIngredient, isOpen } = useSelector(state => state.ingredientDetails);
 
     const closeModal = (): void => {

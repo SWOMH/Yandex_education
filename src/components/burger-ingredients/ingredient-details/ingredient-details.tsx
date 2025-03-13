@@ -1,15 +1,13 @@
 import React, { FC } from 'react';
-import { ingredientPropType } from '../../../utils/type';
 import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/types/data';
 import { IIngredientDetails } from '../../../utils/types';
+
 
 const IngredientDetails: FC<IIngredientDetails> = ({ titleClassName  }) => {
     const { id } = useParams();
-    // @ts-ignore
     const ingredients = useSelector(state => state.ingredients.ingredients);
-    // @ts-ignore
     const ingredient = ingredients.find(item => item._id === id);
 
     if (!ingredient) {

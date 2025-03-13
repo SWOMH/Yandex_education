@@ -1,0 +1,85 @@
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 100px 0px 20px;
+
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 580px;
+  gap: 60px;
+}
+
+.orders {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.statistics {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ordersBoard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 36px;
+}
+
+.orderStatus {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.statusTitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin: initial;
+}
+
+.orderNumbers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.totalStats {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.completedAll,
+.completedToday {
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.number {
+  font-size: 144px;
+  text-shadow: 0px 0px 16px rgba(27, 27, 241, 0.747),
+               0px 0px 8px rgba(51, 51, 255, 0.774);
+}
+
+.done li {
+  color: #00CCCC;
+}
+
+.orderNumbers li {
+  font-family: 'Iceland', sans-serif;
+  font-size: 28px;
+} 

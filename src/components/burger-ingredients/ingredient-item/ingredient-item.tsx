@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styles from './ingredient-item.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card'; 
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/types/data';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { IIngredient } from '../../../utils/types';
 
@@ -13,8 +13,7 @@ const IngredientsItem: FC<IIngredientsItemProps> = ({ setActiveTab }) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { ingredients } = useSelector((state: { ingredients: { ingredients: IIngredient[] } }) => state.ingredients);
-
+    const { ingredients } = useSelector(state => state.ingredients);
 
     const buns = ingredients.filter(item => item.type === 'bun');
     const sauces = ingredients.filter(item => item.type === 'sauce');

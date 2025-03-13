@@ -9,6 +9,9 @@ const API_RESET_PASSWORD = '/password-reset'; // эндпоинт запроса
 const API_RESET_PASSWORD_RESET = '/password-reset/reset' // эндпоинт самого сброса пароля
 
 
+export const WS_URL = 'wss://norma.nomoreparties.space/orders'; // 50 последних заказов
+export const API_ORDER = '/orders/{номер заказа}' // GET запрос определенного заказа
+
 interface IApiResponse<T> {
     success: boolean;
     message?: string;
@@ -87,12 +90,9 @@ export const forgotPassword = async (email: string): Promise<boolean> => {
         const data = await response.json();
         return data.success;
         
-    } catch (error) {
-        // @ts-ignore
-        dispatch({ 
-            // @ts-ignore
-            type: LOGIN_FAILED,
-            // @ts-ignore
+    } catch (error) {// @ts-ignore
+        dispatch({ // @ts-ignore
+            type: LOGIN_FAILED, // @ts-ignore
             error: error.message 
         });
         return false;
@@ -112,12 +112,9 @@ export const resetPassword = async (password: string, token: string): Promise<bo
         const data = await response.json();
         return data.success          
         
-    } catch (error) {
-        // @ts-ignore
-        dispatch({ 
-            // @ts-ignore
-            type: LOGIN_FAILED,
-            // @ts-ignore
+    } catch (error) {// @ts-ignore
+        dispatch({  // @ts-ignore
+            type: LOGIN_FAILED, // @ts-ignore
             error: error.message 
         });
         return false;

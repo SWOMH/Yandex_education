@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/types/data';
 import IngredientDetails  from '../../burger-ingredients/ingredient-details/ingredient-details';
 import styles from './ingredient-page.module.css';
 
 function IngredientPage() {
     const { id } = useParams<{ id: string }>();
-    //@ts-ignore
-    const ingredients = useSelector(state => state.ingredients.ingredients);// @ts-ignore
-    const ingredient = ingredients.find(item => item._id === id);
+    
+    const ingredients = useSelector(state => state.ingredients.ingredients);
+    const ingredient = ingredients.find((item: { _id: string | undefined; }) => item._id === id);
 
     if (!ingredient) {
         return <div>Ингредиент не найден</div>;
