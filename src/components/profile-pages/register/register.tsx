@@ -2,7 +2,7 @@ import React, { FC, FormEvent, useState } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './register.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../services/types/data';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../../services/actions/user';
 import { IRegisterForm, IFormEvent } from '../../../utils/types';
@@ -23,9 +23,7 @@ const Register: FC = () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        // @ts-ignore
         dispatch(registerUser(form.email, form.password, form.name))
-        // @ts-ignore
             .then((success) => {
                 if (success) {
                     navigate('/');

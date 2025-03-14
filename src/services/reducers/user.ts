@@ -9,22 +9,37 @@ import {
     SET_IS_AUTH_CHECKED,
     EDIT_PROFILE_REQUEST,
     EDIT_PROFILE_SUCCESS,
-    EDIT_PROFILE_FAILED
+    EDIT_PROFILE_FAILED,
+    IUser,
+    TUserActions
 } from '../actions/user';
 
-const initialState = {
+export type TUserState = {
+    user: IUser | null;
+    isAuthChecked: boolean;
+    registerRequest: boolean;
+    registerFailed: boolean;
+    error: string;
+    loginRequest: boolean;
+    loginFailed: boolean;
+    editProfileRequest: boolean;
+    editProfileFailed: boolean;
+    
+};
+  
+const initialState: TUserState = {
     user: null,
     isAuthChecked: false,
     registerRequest: false,
     registerFailed: false,
-    error: null,
+    error: '',
     loginRequest: false,
     loginFailed: false,
     editProfileRequest: false,
     editProfileFailed: false
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
     switch (action.type) {
         case REGISTER_REQUEST: {
             return {

@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../../services/types/data';
 import ProfileNav from './profile-nav/profile-nav';
 import { editUserInfo } from '../../../services/actions/user'
 import { IFormEvent, IRegisterForm } from '../../../utils/types';
 
 const Profile: FC = () => {
     const dispatch = useDispatch();
-    // @ts-ignore
     const user = useSelector(state => state.user.user);
     const [form, setForm] = React.useState<IRegisterForm>({
         name: user?.name || '',
@@ -39,7 +38,6 @@ const Profile: FC = () => {
         if (form.password) updatedFields.password = form.password;
 
         if (Object.keys(updatedFields).length > 0) {
-            //@ts-ignore
             dispatch(editUserInfo(updatedFields));
         }
 

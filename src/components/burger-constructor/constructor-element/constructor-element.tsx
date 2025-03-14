@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-element.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../../services/types/data';
 import { deleteIngredient } from '../../../services/actions/constructor';
 import DraggableConstructorElement from './draggable-constructor-element';
 import { IhandleDelete, IIngredient, IConstructorState } from '../../../utils/types';
 
 const SelectedIngredients: FC = () => {
     const dispatch = useDispatch();
-    const { buns, ingredients } = useSelector((state: { burgerConstructor: IConstructorState }) => state.burgerConstructor);
+    const { buns, ingredients } = useSelector(state => state.burgerConstructor);
 
     const handleDeleteIngredient = ({ index, ingredientId }: IhandleDelete): void => {
         dispatch(deleteIngredient(index, ingredientId));
@@ -43,7 +43,6 @@ const SelectedIngredients: FC = () => {
                         key={item.uniqueId}
                         item={item}
                         index={index}
-                        // @ts-ignore {() => handleClose(index, item._id)}
                         handleClose={() => handleDeleteIngredient({ index, ingredientId: item._id })}
                     />
                 ))}

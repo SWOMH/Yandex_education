@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { thunk } from 'redux-thunk';
 import { rootReducer } from './services/root-r.js';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-
+import { socketMiddleware } from './services/middleware/socket-middleware';
 
 const composeEnhancers =
 // @ts-ignore
@@ -17,10 +17,9 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware()));
 
-const store = createStore(rootReducer, enhancer);
-
+export const store = createStore(rootReducer, enhancer);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
