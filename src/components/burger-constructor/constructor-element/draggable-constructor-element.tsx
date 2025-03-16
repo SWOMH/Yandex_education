@@ -52,6 +52,7 @@ const DraggableConstructorElement: FC<IDraggableConstructorElementProps> = ({ it
         <div 
             ref={ref} 
             className={`${styles.ingredient} ${isDragging ? styles.dragging : ''}`}
+            data-testid={`constructor-ingredient-${item._id}`}
         >
             <div className={styles.dragIcon}>
                 <DragIcon type="primary" />

@@ -1,4 +1,3 @@
-// user.test.js
 import { userReducer } from './user';
 import {
   REGISTER_REQUEST,
@@ -15,7 +14,6 @@ import {
 } from '../actions/user';
 
 describe('userReducer', () => {
-  // Моковые данные для тестов
   const mockUser = {
     email: 'test@example.com',
     name: 'Test User',
@@ -23,7 +21,6 @@ describe('userReducer', () => {
 
   const mockError = 'Something went wrong';
 
-  // Тест на начальное состояние
   it('should return the initial state', () => {
     const initialState = {
       user: null,
@@ -40,7 +37,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, {})).toEqual(initialState);
   });
 
-  // Тест на обработку REGISTER_REQUEST
   it('should handle REGISTER_REQUEST', () => {
     const action = {
       type: REGISTER_REQUEST,
@@ -61,7 +57,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку REGISTER_SUCCESS
   it('should handle REGISTER_SUCCESS', () => {
     const action = {
       type: REGISTER_SUCCESS,
@@ -83,7 +78,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку REGISTER_FAILED
   it('should handle REGISTER_FAILED', () => {
     const action = {
       type: REGISTER_FAILED,
@@ -105,7 +99,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку SET_USER
   it('should handle SET_USER', () => {
     const action = {
       type: SET_USER,
@@ -127,7 +120,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку LOGIN_REQUEST
   it('should handle LOGIN_REQUEST', () => {
     const action = {
       type: LOGIN_REQUEST,
@@ -148,7 +140,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку LOGIN_SUCCESS
   it('should handle LOGIN_SUCCESS', () => {
     const action = {
       type: LOGIN_SUCCESS,
@@ -170,7 +161,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку LOGIN_FAILED
   it('should handle LOGIN_FAILED', () => {
     const action = {
       type: LOGIN_FAILED,
@@ -192,7 +182,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку SET_IS_AUTH_CHECKED
   it('should handle SET_IS_AUTH_CHECKED', () => {
     const action = {
       type: SET_IS_AUTH_CHECKED,
@@ -214,7 +203,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку EDIT_PROFILE_REQUEST
   it('should handle EDIT_PROFILE_REQUEST', () => {
     const action = {
       type: EDIT_PROFILE_REQUEST,
@@ -235,7 +223,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку EDIT_PROFILE_SUCCESS
   it('should handle EDIT_PROFILE_SUCCESS', () => {
     const action = {
       type: EDIT_PROFILE_SUCCESS,
@@ -257,7 +244,6 @@ describe('userReducer', () => {
     expect(userReducer(undefined, action)).toEqual(expectedState);
   });
 
-  // Тест на обработку EDIT_PROFILE_FAILED
   it('should handle EDIT_PROFILE_FAILED', () => {
     const action = {
       type: EDIT_PROFILE_FAILED,
