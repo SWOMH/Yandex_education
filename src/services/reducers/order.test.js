@@ -1,4 +1,4 @@
-import { orderReducer } from './order';
+import { orderReducer, initialState } from './order';
 import {
   ORDER_REQUEST,
   ORDER_SUCCESS,
@@ -20,16 +20,7 @@ describe('orderReducer', () => {
     updatedAt: '2023-10-01T00:00:00.000Z',
   };
 
-  it('should return the initial state', () => {
-    const initialState = {
-      orderRequest: false,
-      orderFailed: false,
-      order: null,
-      currentOrder: null,
-      currentOrderRequest: false,
-      currentOrderFailed: false,
-    };
-
+  it('should return the initial state', () => {    
     expect(orderReducer(undefined, {})).toEqual(initialState);
   });
 
@@ -39,12 +30,9 @@ describe('orderReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       orderRequest: true,
-      orderFailed: false,
-      order: null,
-      currentOrder: null,
-      currentOrderRequest: false,
-      currentOrderFailed: false,
+      orderFailed: false,      
     };
 
     expect(orderReducer(undefined, action)).toEqual(expectedState);
@@ -57,12 +45,10 @@ describe('orderReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       orderRequest: false,
       orderFailed: false,
-      order: mockOrderNumber,
-      currentOrder: null,
-      currentOrderRequest: false,
-      currentOrderFailed: false,
+      order: mockOrderNumber,      
     };
 
     expect(orderReducer(undefined, action)).toEqual(expectedState);
@@ -74,12 +60,9 @@ describe('orderReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       orderRequest: false,
-      orderFailed: true,
-      order: null,
-      currentOrder: null,
-      currentOrderRequest: false,
-      currentOrderFailed: false,
+      orderFailed: true,    
     };
 
     expect(orderReducer(undefined, action)).toEqual(expectedState);
@@ -91,10 +74,7 @@ describe('orderReducer', () => {
     };
 
     const expectedState = {
-      orderRequest: false,
-      orderFailed: false,
-      order: null,
-      currentOrder: null,
+      ...initialState,      
       currentOrderRequest: true,
       currentOrderFailed: false,
     };
@@ -109,9 +89,7 @@ describe('orderReducer', () => {
     };
 
     const expectedState = {
-      orderRequest: false,
-      orderFailed: false,
-      order: null,
+      ...initialState,      
       currentOrder: mockOrder,
       currentOrderRequest: false,
       currentOrderFailed: false,
@@ -126,10 +104,7 @@ describe('orderReducer', () => {
     };
 
     const expectedState = {
-      orderRequest: false,
-      orderFailed: false,
-      order: null,
-      currentOrder: null,
+      ...initialState,      
       currentOrderRequest: false,
       currentOrderFailed: true,
     };
