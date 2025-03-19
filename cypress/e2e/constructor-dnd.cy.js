@@ -1,7 +1,27 @@
+
+const SELECTORS = {
+  INGREDIENT_BUN: '[data-testid="ingredient-bun"]',
+  CONSTRUCTOR_DROP_TARGET: '[data-testid="constructor-drop-target"]',
+  CONSTRUCTOR_BUN_TOP: '[data-testid="constructor-bun-top"]',
+  CONSTRUCTOR_BUN_BOTTOM: '[data-testid="constructor-bun-bottom"]',
+  INGREDIENT_MAIN: '[data-testid="ingredient-main"]',
+  CONSTRUCTOR_ITEMS: '[data-testid="constructor-items"]',
+  ORDER_BUTTON: '[data-testid="order-button"]'
+};
+
+
+Cypress.Commands.add('dragAndDrop', (sourceSelector, destinationSelector) => {
+  cy.get(sourceSelector).first().trigger('dragstart', { force: true });
+  cy.wait(300);
+  cy.get(destinationSelector).trigger('drop', { force: true });
+  cy.wait(300);
+  cy.get(sourceSelector).first().trigger('dragend', { force: true });
+  cy.wait(500);
+});
+
 describe('Конструктор бургеров - перетаскивание ингредиентов', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' }).as('getIngredients');
-    
     cy.visit('/');
     cy.wait('@getIngredients');
     cy.contains('Соберите бургер').should('be.visible');
@@ -9,104 +29,21 @@ describe('Конструктор бургеров - перетаскивание
   });
 
   it('перетаскивание булки в конструктор', () => {
-    cy.get('[data-testid="ingredient-bun"]').first().as('bun');
-
-    cy.get('[data-testid="constructor-drop-target"]').as('dropTarget');
-
-    cy.get('@bun').should('exist');
-    cy.get('@dropTarget').should('exist');
-
-    cy.get('@bun')
-      .trigger('dragstart', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('@dropTarget')
-      .trigger('drop', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('@bun')
-      .trigger('dragend', { force: true });
-
-    cy.wait(500);
-
-    cy.get('[data-testid="constructor-bun-top"]').should('exist');
-    cy.get('[data-testid="constructor-bun-top"]').should('be.visible');
-    cy.get('[data-testid="constructor-bun-bottom"]').should('exist');
-    cy.get('[data-testid="constructor-bun-bottom"]').should('be.visible');
+    cy.dragAndDrop(SELECTORS.INGREDIENT_BUN, SELECTORS.CONSTRUCTOR_DROP_TARGET);
+    cy.get(SELECTORS.CONSTRUCTOR_BUN_TOP).should('exist').and('be.visible');
+    cy.get(SELECTORS.CONSTRUCTOR_BUN_BOTTOM).should('exist').and('be.visible');
   });
 
   it('перетаскивание начинки в конструктор', () => {
-    cy.get('[data-testid="ingredient-bun"]').first()
-      .trigger('dragstart', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('[data-testid="constructor-drop-target"]')
-      .trigger('drop', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('[data-testid="ingredient-bun"]').first()
-      .trigger('dragend', { force: true });
-    
-    cy.wait(500);
-
-    cy.get('[data-testid="ingredient-main"]').first().as('filling');
-
-    cy.get('@filling')
-      .trigger('dragstart', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('[data-testid="constructor-drop-target"]')
-      .trigger('drop', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('@filling')
-      .trigger('dragend', { force: true });
-
-    cy.wait(500);
-
-    cy.get('[data-testid="constructor-items"]').find('[data-testid^="constructor-ingredient-"]').should('exist');
+    cy.dragAndDrop(SELECTORS.INGREDIENT_BUN, SELECTORS.CONSTRUCTOR_DROP_TARGET);
+    cy.dragAndDrop(SELECTORS.INGREDIENT_MAIN, SELECTORS.CONSTRUCTOR_DROP_TARGET);
+    cy.get(SELECTORS.CONSTRUCTOR_ITEMS).find('[data-testid^="constructor-ingredient-"]').should('exist');
   });
 
   it('проверка активации кнопки заказа после добавления ингредиентов', () => {
-    cy.get('[data-testid="order-button"]').should('be.disabled');
-
-    cy.get('[data-testid="ingredient-bun"]').first()
-      .trigger('dragstart', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('[data-testid="constructor-drop-target"]')
-      .trigger('drop', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('[data-testid="ingredient-bun"]').first()
-      .trigger('dragend', { force: true });
-    
-    cy.wait(500);
-
-    cy.get('[data-testid="ingredient-main"]').first()
-      .trigger('dragstart', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('[data-testid="constructor-drop-target"]')
-      .trigger('drop', { force: true });
-    
-    cy.wait(300);
-    
-    cy.get('[data-testid="ingredient-main"]').first()
-      .trigger('dragend', { force: true });
-    
-    cy.wait(500);
-
-    cy.get('[data-testid="order-button"]').should('not.be.disabled');
+    cy.get(SELECTORS.ORDER_BUTTON).should('be.disabled');
+    cy.dragAndDrop(SELECTORS.INGREDIENT_BUN, SELECTORS.CONSTRUCTOR_DROP_TARGET);
+    cy.dragAndDrop(SELECTORS.INGREDIENT_MAIN, SELECTORS.CONSTRUCTOR_DROP_TARGET);
+    cy.get(SELECTORS.ORDER_BUTTON).should('not.be.disabled');
   });
-
-}); 
+});

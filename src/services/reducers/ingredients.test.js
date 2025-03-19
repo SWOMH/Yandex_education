@@ -1,4 +1,4 @@
-import { ingredientsReducer } from './ingredients';
+import { ingredientsReducer, initialState } from './ingredients';
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -37,13 +37,7 @@ describe('ingredientsReducer', () => {
     },
   ];
 
-  it('should return the initial state', () => {
-    const initialState = {
-      ingredients: [],
-      ingredientsRequest: false,
-      ingredientsFailed: false,
-    };
-
+  it('should return the initial state', () => {    
     expect(ingredientsReducer(undefined, {})).toEqual(initialState);
   });
 
@@ -53,7 +47,7 @@ describe('ingredientsReducer', () => {
     };
 
     const expectedState = {
-      ingredients: [],
+      ...initialState,      
       ingredientsRequest: true,
       ingredientsFailed: false,
     };
@@ -68,6 +62,7 @@ describe('ingredientsReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       ingredients: mockIngredients,
       ingredientsRequest: false,
       ingredientsFailed: false,
@@ -82,6 +77,7 @@ describe('ingredientsReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       ingredients: [],
       ingredientsRequest: false,
       ingredientsFailed: true,

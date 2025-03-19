@@ -1,4 +1,4 @@
-import { wsReducer } from './ws-reducer';
+import { wsReducer, initialState } from './ws-reducer'; // Импортируем initialState
 import {
   WS_CONNECTION_SUCCESS,
   WS_AUTH_CONNECTION_SUCCESS,
@@ -35,15 +35,6 @@ describe('wsReducer', () => {
   const mockEvent = new Event('error');
 
   it('should return the initial state', () => {
-    const initialState = {
-      wsConnected: false,
-      wsAuthConnected: false,
-      orders: [],
-      userOrders: [],
-      total: 0,
-      totalToday: 0,
-    };
-
     expect(wsReducer(undefined, {})).toEqual(initialState);
   });
 
@@ -53,12 +44,8 @@ describe('wsReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       wsConnected: true,
-      wsAuthConnected: false,
-      orders: [],
-      userOrders: [],
-      total: 0,
-      totalToday: 0,
       error: undefined,
     };
 
@@ -71,12 +58,8 @@ describe('wsReducer', () => {
     };
 
     const expectedState = {
-      wsConnected: false,
+      ...initialState,
       wsAuthConnected: true,
-      orders: [],
-      userOrders: [],
-      total: 0,
-      totalToday: 0,
       authError: undefined,
     };
 
@@ -90,12 +73,8 @@ describe('wsReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       wsConnected: false,
-      wsAuthConnected: false,
-      orders: [],
-      userOrders: [],
-      total: 0,
-      totalToday: 0,
       error: mockEvent,
     };
 
@@ -109,12 +88,8 @@ describe('wsReducer', () => {
     };
 
     const expectedState = {
-      wsConnected: false,
+      ...initialState,
       wsAuthConnected: false,
-      orders: [],
-      userOrders: [],
-      total: 0,
-      totalToday: 0,
       authError: mockEvent,
     };
 
@@ -127,12 +102,8 @@ describe('wsReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       wsConnected: false,
-      wsAuthConnected: false,
-      orders: [],
-      userOrders: [],
-      total: 0,
-      totalToday: 0,
       error: undefined,
     };
 
@@ -145,12 +116,8 @@ describe('wsReducer', () => {
     };
 
     const expectedState = {
-      wsConnected: false,
+      ...initialState,
       wsAuthConnected: false,
-      orders: [],
-      userOrders: [],
-      total: 0,
-      totalToday: 0,
       authError: undefined,
     };
 
@@ -168,10 +135,8 @@ describe('wsReducer', () => {
     };
 
     const expectedState = {
-      wsConnected: false,
-      wsAuthConnected: false,
+      ...initialState,
       orders: mockOrders,
-      userOrders: [],
       total: 100,
       totalToday: 10,
     };
@@ -188,12 +153,8 @@ describe('wsReducer', () => {
     };
 
     const expectedState = {
-      wsConnected: false,
-      wsAuthConnected: false,
-      orders: [],
+      ...initialState,
       userOrders: mockOrders,
-      total: 0,
-      totalToday: 0,
     };
 
     expect(wsReducer(undefined, action)).toEqual(expectedState);

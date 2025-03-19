@@ -1,4 +1,4 @@
-import { userReducer } from './user';
+import { userReducer, initialState } from './user'; // Импортируем initialState
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -22,18 +22,6 @@ describe('userReducer', () => {
   const mockError = 'Something went wrong';
 
   it('should return the initial state', () => {
-    const initialState = {
-      user: null,
-      isAuthChecked: false,
-      registerRequest: false,
-      registerFailed: false,
-      error: '',
-      loginRequest: false,
-      loginFailed: false,
-      editProfileRequest: false,
-      editProfileFailed: false,
-    };
-
     expect(userReducer(undefined, {})).toEqual(initialState);
   });
 
@@ -43,15 +31,10 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
-      user: null,
-      isAuthChecked: false,
+      ...initialState,
       registerRequest: true,
       registerFailed: false,
-      error: null,
-      loginRequest: false,
-      loginFailed: false,
-      editProfileRequest: false,
-      editProfileFailed: false,
+      error: ''
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -64,15 +47,12 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       user: mockUser,
       isAuthChecked: true,
       registerRequest: false,
       registerFailed: false,
-      error: '',
-      loginRequest: false,
-      loginFailed: false,
-      editProfileRequest: false,
-      editProfileFailed: false,
+      error: ''
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -85,15 +65,10 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
-      user: null,
-      isAuthChecked: false,
+      ...initialState,
       registerRequest: false,
       registerFailed: true,
       error: mockError,
-      loginRequest: false,
-      loginFailed: false,
-      editProfileRequest: false,
-      editProfileFailed: false,
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -106,15 +81,9 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       user: mockUser,
-      isAuthChecked: false,
-      registerRequest: false,
-      registerFailed: false,
-      error: '',
-      loginRequest: false,
-      loginFailed: false,
-      editProfileRequest: false,
-      editProfileFailed: false,
+      error: ''
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -126,15 +95,10 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
-      user: null,
-      isAuthChecked: false,
-      registerRequest: false,
-      registerFailed: false,
-      error: null,
+      ...initialState,
       loginRequest: true,
       loginFailed: false,
-      editProfileRequest: false,
-      editProfileFailed: false,
+      error: '',
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -147,15 +111,12 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       user: mockUser,
       isAuthChecked: true,
-      registerRequest: false,
-      registerFailed: false,
-      error: '',
       loginRequest: false,
       loginFailed: false,
-      editProfileRequest: false,
-      editProfileFailed: false,
+      error: '',
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -168,15 +129,10 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
-      user: null,
-      isAuthChecked: false,
-      registerRequest: false,
-      registerFailed: false,
-      error: mockError,
+      ...initialState,
       loginRequest: false,
       loginFailed: true,
-      editProfileRequest: false,
-      editProfileFailed: false,
+      error: mockError,
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -189,15 +145,8 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
-      user: null,
+      ...initialState,
       isAuthChecked: true,
-      registerRequest: false,
-      registerFailed: false,
-      error: '',
-      loginRequest: false,
-      loginFailed: false,
-      editProfileRequest: false,
-      editProfileFailed: false,
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -209,15 +158,10 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
-      user: null,
-      isAuthChecked: false,
-      registerRequest: false,
-      registerFailed: false,
-      error: null,
-      loginRequest: false,
-      loginFailed: false,
+      ...initialState,
       editProfileRequest: true,
       editProfileFailed: false,
+      error: '',
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -230,15 +174,12 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
+      ...initialState,
       user: mockUser,
       isAuthChecked: true,
-      registerRequest: false,
-      registerFailed: false,
-      error: '',
-      loginRequest: false,
-      loginFailed: false,
       editProfileRequest: false,
       editProfileFailed: false,
+      error: '',
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
@@ -251,15 +192,10 @@ describe('userReducer', () => {
     };
 
     const expectedState = {
-      user: null,
-      isAuthChecked: false,
-      registerRequest: false,
-      registerFailed: false,
-      error: mockError,
-      loginRequest: false,
-      loginFailed: false,
+      ...initialState,
       editProfileRequest: false,
       editProfileFailed: true,
+      error: mockError,
     };
 
     expect(userReducer(undefined, action)).toEqual(expectedState);
