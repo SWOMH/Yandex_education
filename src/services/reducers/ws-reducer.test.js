@@ -1,4 +1,4 @@
-import { wsReducer, initialState } from './ws-reducer'; // Импортируем initialState
+import { wsReducer, initialState } from './ws-reducer';
 import {
   WS_CONNECTION_SUCCESS,
   WS_AUTH_CONNECTION_SUCCESS,

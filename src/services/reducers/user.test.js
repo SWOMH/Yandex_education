@@ -1,4 +1,4 @@
-import { userReducer, initialState } from './user'; // Импортируем initialState
+import { userReducer, initialState } from './user';
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
