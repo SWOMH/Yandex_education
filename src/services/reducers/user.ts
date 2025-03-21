@@ -27,7 +27,7 @@ export type TUserState = {
     
 };
   
-const initialState: TUserState = {
+export const initialState: TUserState = {
     user: null,
     isAuthChecked: false,
     registerRequest: false,
@@ -47,7 +47,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
                 registerRequest: true,
                 isAuthChecked: false,
                 registerFailed: false,
-                error: null
+                error: ''
             };
         }
         case REGISTER_SUCCESS: {
@@ -55,7 +55,8 @@ export const userReducer = (state = initialState, action: TUserActions) => {
                 ...state,
                 user: action.user,
                 registerRequest: false,
-                isAuthChecked: true
+                isAuthChecked: true,
+                error: ''
             };
         }
         case REGISTER_FAILED: {
@@ -71,6 +72,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
             return {
                 ...state,
                 user: action.user,
+                error: ''
             };
         }
         case LOGIN_REQUEST: {
@@ -78,7 +80,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
                 ...state,
                 loginRequest: true,
                 loginFailed: false,
-                error: null
+                error: ''
             };
         }
         case LOGIN_SUCCESS: {
@@ -86,7 +88,8 @@ export const userReducer = (state = initialState, action: TUserActions) => {
                 ...state,
                 user: action.user,
                 loginRequest: false,
-                isAuthChecked: true
+                isAuthChecked: true,
+                error: ''
             };
         }
         case LOGIN_FAILED: {
@@ -109,7 +112,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
                 ...state,
                 editProfileRequest: true,                
                 editProfileFailed: false,
-                error: null
+                error: ''
             };
         }
         case EDIT_PROFILE_SUCCESS: {
@@ -117,7 +120,8 @@ export const userReducer = (state = initialState, action: TUserActions) => {
                 ...state,
                 user: action.user,
                 editProfileRequest: false,
-                isAuthChecked: true
+                isAuthChecked: true,
+                error: ''
             };
         }
         case EDIT_PROFILE_FAILED: {
@@ -133,4 +137,4 @@ export const userReducer = (state = initialState, action: TUserActions) => {
             return state;
         }
     }
-}; 
+};

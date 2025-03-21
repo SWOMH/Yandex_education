@@ -16,9 +16,9 @@ const SelectedIngredients: FC = () => {
 
     return (
         //@ts-ignore
-        <div className={styles.constructor}>
+        <div className={styles.constructor} data-testid="constructor-elements">
             {buns && buns.length > 0 ? 
-                <div className={`${styles.locked} ml-8`}>
+                <div className={`${styles.locked} ml-8`} data-testid="constructor-bun-top">
                     <ConstructorElement
                         type="top"
                         isLocked={true}
@@ -26,7 +26,7 @@ const SelectedIngredients: FC = () => {
                         price={buns[0].price}
                         thumbnail={buns[0].image}
                     />
-                </div> : <div className={`${styles.locked} ml-8`}>
+                </div> : <div className={`${styles.locked} ml-8`} data-testid="constructor-bun-empty">
                     <ConstructorElement
                         type="top"
                         isLocked={false}
@@ -37,7 +37,7 @@ const SelectedIngredients: FC = () => {
                     </div>
             }
 
-            <div className={`${styles.scrollable} custom-scroll`}>
+            <div className={`${styles.scrollable} custom-scroll`} data-testid="constructor-items">
                 {ingredients.map((item: IIngredient, index: number) => (
                     <DraggableConstructorElement
                         key={item.uniqueId}
@@ -49,7 +49,7 @@ const SelectedIngredients: FC = () => {
             </div>
 
             {buns && buns.length > 0 ?
-                <div className={`${styles.locked} ml-8`}>
+                <div className={`${styles.locked} ml-8`} data-testid="constructor-bun-bottom">
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
@@ -57,7 +57,7 @@ const SelectedIngredients: FC = () => {
                         price={buns[0].price}
                         thumbnail={buns[0].image}
                     />
-                </div> : <div className={`${styles.locked} ml-8`}>
+                </div> : <div className={`${styles.locked} ml-8`} data-testid="constructor-bun-empty-bottom">
                     <ConstructorElement
                         type="bottom"
                         isLocked={false}

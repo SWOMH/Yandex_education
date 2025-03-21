@@ -5,6 +5,7 @@ import { useDrag } from 'react-dnd';
 import { useSelector } from '../../../services/types/data';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IIngredient } from '../../../utils/types';
+
 interface IIngredientCardProps {
     image: string;
     price: number;
@@ -37,6 +38,7 @@ const IngredientCard: FC<IIngredientCardProps> = ({ image, price, name, ingredie
             ref={dragRef}
             className={`${styles.card} ${isDragging ? styles.dragging : ''}`}
             onClick={handleClick}
+            data-testid={`ingredient-${ingredient.type}`}
         >
             {count > 0 && (
                 <div className={styles.counter}>

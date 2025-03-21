@@ -28,7 +28,6 @@ export interface IAuthResponse {
     refreshToken: string;
 }
 
-// Интерфейсы для действий
 export interface ISetIsAuthCheckedAction {
     type: typeof SET_IS_AUTH_CHECKED;
     isAuthChecked: boolean;
@@ -94,31 +93,6 @@ export type TUserActions =
     | IEditProfileSuccessAction
     | IEditProfileFailedAction;
 
-
-// HZ
-// @ts-ignore
-// export const userSlice = (ingredients) => {// @ts-ignore
-//     return async (dispatch) => {// @ts-ignore
-//         dispatch({ type: ORDER_REQUEST });
-//         try {
-//             const data = await fetchWithRefresh(ORDER_ENDPOINT, {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify({ ingredients }),
-//             });
-//             if (data.success) {// @ts-ignore
-//                 dispatch({ type: ORDER_SUCCESS, order: data });
-//             } else {// @ts-ignore
-//                 dispatch({ type: ORDER_FAILED });
-//             }
-//         } catch (error) {
-//             console.error('Ошибка при оформлении заказа:', error);// @ts-ignore
-//             dispatch({ type: ORDER_FAILED });
-//         }
-//     };
-// };
 
 export const registerUser: AppThunk<Promise<boolean>> = (email: string, password: string, name: string) => {
     return async (dispatch: AppDispatch) => {

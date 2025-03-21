@@ -62,7 +62,11 @@ function BurgerConstructor() {
     return (
         <>
             <section className={`${styles.section} pt-25`}>
-                <div ref={dropTarget} className={`${styles.constructor} custom-scroll ${isHover ? styles.onHover : ''}`}>
+                <div 
+                    ref={dropTarget} 
+                    className={`${styles.constructor} custom-scroll ${isHover ? styles.onHover : ''}`}
+                    data-testid="constructor-drop-target"
+                >
                     <SelectedIngredients />
                 </div>
                 
@@ -77,6 +81,7 @@ function BurgerConstructor() {
                         size="large"
                         onClick={handleOrderClick}
                         disabled={!buns.length || !ingredients.length}
+                        data-testid="order-button"
                     >
                         {user ? 'Оформить заказ' : 'Войти для заказа'}
                     </Button>

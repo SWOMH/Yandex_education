@@ -24,7 +24,7 @@ import {
   };
 
 
-const initialState: TWsState = {
+export const initialState: TWsState = {
     wsConnected: false,
     wsAuthConnected: false,
     orders: [],
